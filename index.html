@@ -3,9 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./assets/fav.png" type="image/x-icon">
+    <link rel="stylesheet" href="./styles/styles.css">
     <title>The Movie Database</title>
 </head>
 <body>
-    
+    <nav>
+        <div class="left">
+            <img src="./assets/logo.svg" alt="">
+            <h3>Movies</h3>
+        </div>
+        <div class="right">
+            <h3>Login</h3>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="bgWelcome">
+            <div class="welcome-screen">
+                <h1>Welcome.</h1>
+                <h2>Millions of movies, TV shows and people to discover. Explore now.</h2>
+                <form id="searchStuff">
+                    <input type="text" placeholder="Search for a movie, tv show, person......">
+                    <button>Search</button>
+                </form>
+            </div>
+        </div>
+        <div class="trending">
+            <div class="headings">
+                <h2>Trending</h2>
+                <div class="buttons">
+                    <button id="todaysTrending"><h4>Today</h4></button>
+                    <button id="thisWeekTrending"><h4>This Week</h4></button>
+                </div>
+            </div>
+            <div class="trendingContents">
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Scripts goes below this point -->
+
+    <script src="./js/api.js"></script>
+    <script src="./js/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js" integrity="sha512-42PE0rd+wZ2hNXftlM78BSehIGzezNeQuzihiBCvUEB3CVxHvsShF86wBWwQORNxNINlBPuq7rG4WWhNiTVHFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 </body>
 </html>
+
+
+
+<!-- Rough Area -->

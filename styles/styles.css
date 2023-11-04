@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Source Sans 3', sans-serif;
+}
+
+nav, nav div {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 0 20px;
+    background-color: rgba(3,37,65,1);
+    color: #fff;
+}
+
+nav div h3 {
+    font-size: medium;
+}
+
+nav .left {
+    flex-basis: 22%;
+}
+
+nav .left img {
+    width: 65%;
+    margin: 25px 0;
+}
+
+.bgWelcome {
+    min-height: 325px;
+    height: calc(100vh/2.3);
+    background-image: linear-gradient(to right,rgba(3,37,65,0.9) 0%, rgba(3,37,65,0.5) 100%), url('../assets/1st\ img.jpg');
+    background-position: center;
+    color: #fff;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome-screen {
+    width: 90%;
+}
+
+.welcome-screen h1{
+    font-size: xxx-large;
+    margin: 0;
+}
+
+.welcome-screen h2 {
+    margin: 0;
+    font-size: x-large
+}
+
+.welcome-screen form {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 50px auto 0px;
+}
+
+.welcome-screen form input {
+    position: relative;
+    width: 100%;
+    line-height: 30px;
+    font-size: 1.1em;
+    color: rgba(0,0,0,.5);
+    border: 0;
+    border-radius: 30px;
+    padding: 10px 20px;
+    outline: none;
+    border: none;
+}
+
+.welcome-screen form button {
+    position: absolute;
+    align-self: center;
+    border-radius: 30px;
+    padding: 10px 30px;
+    font-weight: bold;
+    font-size: medium;
+    line-height: 30px;
+    border: none;
+    outline: none;
+    color: #fff;
+    background: linear-gradient(to right,rgba(30,213,169,1) 0%,rgba(1,180,228,1) 100%);
+}
+
+.welcome-screen form button:hover {
+    color: rgba(3,37,65,1);
+}
+
+.trending {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.trending .headings, .trending .headings .buttons {
+    display: flex;
+    align-items: center;
+    margin-left: 65px;
+}
+
+.trending .headings .buttons {
+    margin-left: 20px;
+    border: 1px solid rgba(3,37,65,1);
+    border-radius: 20px;
+}
+
+.trending .headings .buttons button{
+    margin: 0;
+    border: none;
+    padding: 5px 20px;
+    background-color: #fff;
+    border-radius: 20px;
+    color: rgba(3,37,65,1);
+    cursor: pointer;
+}
+
+.trending .headings .buttons #todaysTrending {
+    background-color: rgba(3,37,65,1);
+}
+
+.trending .headings .buttons button h4 {
+    margin: 0;
+    font-size: medium;
+}
+
+.trending .headings .buttons #todaysTrending h4 {
+    background: linear-gradient(to right,#c0fecf 0,#1ed5a9 100%);
+    background-clip: linear-gradient(to right,#c0fecf 0,#1ed5a9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.trending .trendingContents {
+    display: flex;
+    overflow-y: hidden;
+}
+
+.trending .trendingContents h1{
+    display: block;
+    margin: 100px auto;
+    align-self: center;
+}
+
+.trending .trendingContents div, .trending .trendingContents div img{
+    width: 150px;
+    cursor: pointer;
+    margin: 20px 10px;
+}
+
+.trending .trendingContents .extraContent {
+    margin: 0 25px;
+    width: 0;
+}
+
+.trending .trendingContents div img, .trending .trendingContents div h3 {
+    margin: 0;
+}
+
+.trending .trendingContents div img {
+    border-radius: 10px;
+}
+
+.trending .trendingContents div h4 {
+    margin: 0;
+    font-size: medium;
+    font-weight: normal;
+    color: rgba(0,0,0,.6);
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(232, 231, 231);
+    border-radius: 8px;
+}
+
+
+.container .bgMovie {
+    min-height: 80vh;
+    background-position: left calc((50vw - 170px) - 320px) top;
+    color: rgb(255, 255, 255);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.container .bgMovie .bgOverlay {
+    min-height: 80vh;
+    background-image: linear-gradient(to right, rgba(31.5, 31.5, 31.5, 1) 30%, rgba(31.5, 31.5, 31.5, 0.9) 50%, rgba(31.5, 31.5, 31.5, 0.30) 100%);
+    display: flex;
+}
+
+.container .bgMovie .bgOverlay img {
+    width: 300px;
+    margin: 30px 50px;
+    border-radius: 10px;
+}
