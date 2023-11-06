@@ -3,20 +3,23 @@ const containerDiv = document.querySelector('div.container');
 const getTrending = async () => {
     const response = await getTrendingContents();
     const trendingData = response.results;
-    const trendingContentsDiv = document.querySelector('div.trendingContents');
+    loadTrendingHtml(trendingData);
+};
 
+const loadTrendingHtml = (trendingData) => {
+    const trendingContentsDiv = document.querySelector('div.trendingContents');
     trendingContentsDiv.innerHTML = `
         <div class="extraContent"><div>
     `;
     trendingData.forEach((data)=>{
-        trendingItem(data,trendingContentsDiv);
+        trendingItem(data, trendingContentsDiv);
     });
     trendingContentsDiv.innerHTML += `
         <div class="extraContent"><div>
     `;
 };
 
-const trendingItem = async (data,trendingContentsDiv) => {
+const trendingItem = async (data, parentElement) => {
     const div = document.createElement('div');
     div.setAttribute('id',`div-${data.id}`);
     div.innerHTML = `
@@ -24,15 +27,15 @@ const trendingItem = async (data,trendingContentsDiv) => {
         <h3>${data.title || data.name}</h3>
         <h4>${moment(data.release_date).format("MMM DD, YYYY")}</h4>
     `;
-    await trendingContentsDiv.appendChild(div);
+    await parentElement.appendChild(div);
 
     const itemDiv = document.querySelector(`div#div-${data.id}`);
     itemDiv.onclick = () => {
-        trendingItemClicked(data);        
+        itemClicked(data);        
     };
 };
 
-const trendingItemClicked = (data) => {
+const itemClicked = (data) => {
     console.log(data);
     containerDiv.innerHTML = `
         <div class="bgMovie">

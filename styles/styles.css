@@ -204,3 +204,61 @@ nav .left img {
     margin: 30px 50px;
     border-radius: 10px;
 }
+
+.container .searchDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container .searchDiv .searchData {
+    max-width: 80%;
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.container .searchDiv .searchData div {
+    display: flex;
+    cursor: pointer;
+    justify-content: center;
+    margin: 20px auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    border-radius: 10px;
+    border: 1px solid rgba(227,227,227,1);
+    background-color: #fff;
+}
+
+.container .searchDiv .searchData div img {
+    width: 100px;
+    margin-right: 10px;
+    min-height: 150px;
+    border-radius: 10px 0 0 10px;
+}
+
+.container .searchDiv .searchData div .contents {
+    display: flex;
+    flex-direction: column;
+    box-shadow: none;
+    border: none;
+    width: 100%;
+}
+
+.container .searchDiv .searchData div .contents h3, .container .searchDiv .searchData div .contents h4 {
+    margin: 0;
+}
+
+.container .searchDiv .searchData div .contents h4 {
+    color: #999;
+    font-weight: normal;
+}
+
+.container .searchDiv .searchData div .contents p {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin: 0;
+    margin-top: 20px;
+    margin-right: 20px;
+}
