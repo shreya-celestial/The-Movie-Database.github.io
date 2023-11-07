@@ -5,6 +5,12 @@ body {
     font-family: 'Source Sans 3', sans-serif;
 }
 
+nav {
+    position: fixed;
+    width: 97%;
+    top: 0
+}
+
 nav, nav div {
     display: flex;
     justify-content: space-between;
@@ -19,6 +25,10 @@ nav div h3 {
     font-size: medium;
 }
 
+nav div * {
+    cursor: pointer;
+}
+
 nav .left {
     flex-basis: 22%;
 }
@@ -26,6 +36,10 @@ nav .left {
 nav .left img {
     width: 65%;
     margin: 25px 0;
+}
+
+.container {
+    margin-top: 70px;
 }
 
 .bgWelcome {
@@ -101,7 +115,7 @@ nav .left img {
     border-right: none;
 }
 
-.trending .headings, .trending .headings .buttons, .popular .headings, .popular .headings .buttons{
+.trending .headings, .trending .headings .buttons, .popular .headings, .popular .headings .buttonsPopular{
     display: flex;
     align-items: center;
     margin-left: 65px;
@@ -115,13 +129,13 @@ nav .left img {
     margin: 0;
 }
 
-.trending .headings .buttons, .popular .headings .buttons {
+.trending .headings .buttons, .popular .headings .buttonsPopular {
     margin-left: 20px;
     border: 1px solid rgba(3,37,65,1);
     border-radius: 20px;
 }
 
-.trending .headings .buttons button, .popular .headings .buttons button{
+.trending .headings .buttons button, .popular .headings .buttonsPopular button{
     margin: 0;
     border: none;
     padding: 5px 20px;
@@ -131,16 +145,16 @@ nav .left img {
     cursor: pointer;
 }
 
-.trending .headings .buttons #todaysTrending, .popular .headings .buttons #streamingPopular {
+.trending .headings .buttons #todaysTrending, .popular .headings .buttonsPopular #moviePopular {
     background-color: rgba(3,37,65,1);
 }
 
-.trending .headings .buttons button h4, .popular .headings .buttons button h4 {
+.trending .headings .buttons button h4, .popular .headings .buttonsPopular button h4 {
     margin: 0;
     font-size: medium;
 }
 
-.trending .headings .buttons #todaysTrending h4, .popular .headings .buttons #streamingPopular h4 {
+.trending .headings .buttons #todaysTrending h4, .popular .headings .buttonsPopular #moviePopular h4 {
     background: linear-gradient(to right,#c0fecf 0,#1ed5a9 100%);
     background-clip: linear-gradient(to right,#c0fecf 0,#1ed5a9 100%);
     -webkit-background-clip: text;
