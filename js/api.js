@@ -13,7 +13,7 @@ const getTrendingContents = async (dayOrWeek) => {
     return trendingData;
 };
 
-const searchItem = async (searchThis) => {
+const searchItem = async (searchThis, page) => {
     const options = {
         method: 'GET',
         headers: {
@@ -21,11 +21,10 @@ const searchItem = async (searchThis) => {
             Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNzgyNzM0OGI4ZWY5OGI3NGUyOTg4ODk0NGJhZTZlYyIsInN1YiI6IjY1NDMzZmVmZTFhZDc5MDBlYTU3OWM2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-87S7MvmbnW2pQX9XdN87KazRKzPDGRa_aZwO8BttGI'
         }
     };
-    const url = `https://api.themoviedb.org/3/search/movie?query=${searchThis}&include_adult=false&language=en-US&page=1`;
+    const url = `https://api.themoviedb.org/3/search/movie?query=${searchThis}&language=en-US&page=${page}`;
     const response = await fetch(url, options);
     const data = await response.json();
-    return data;        
-
+    return data;
 };
 
 const getMovieItem = async (id) => {

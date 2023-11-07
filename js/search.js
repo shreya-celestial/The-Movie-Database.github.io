@@ -1,22 +1,37 @@
 const searchingForm = document.querySelector('form#searchStuff');
 
-searchingForm.onsubmit = async (e) => {
+searchingForm.onsubmit = (e) => {
     e.preventDefault();
     const value = e.target.elements.search.value.replace(' ','%20');
     sessionStorage.setItem('searchValue', value);
-    const response = await searchItem(value);
+    const page = 1;
+    searchValue(value, page);
+};
+
+const searchValue = async (value, page) => {
+    const response = await searchItem(value, page);
     containerDiv.innerHTML = "";
     getSearchData(response);
 };
 
-const getSearchData = async (response) => {
-    const dataList = response.results;
+
+const getSearchInitialHtml = async () => {
     const div = document.createElement('div');
     div.setAttribute('class', 'searchDiv');
     await containerDiv.appendChild(div);
+    const parentDiv = document.querySelector('div.searchDiv');
     const newDiv = document.createElement('div');
     newDiv.setAttribute('class', 'searchData');
-    await document.querySelector('div.searchDiv').appendChild(newDiv);
+    parentDiv.appendChild(newDiv);
+    const pagDiv = document.createElement('div');
+    pagDiv.setAttribute('class', 'searchPagination');
+    parentDiv.appendChild(pagDiv);
+};
+
+const getSearchData = async (response) => {
+    const dataList = response.results;
+    await getSearchInitialHtml();
+    getSearchPagination(response);
     const searchDataDiv = document.querySelector('div.searchData');
     if(dataList.length>0)
     {
@@ -27,6 +42,55 @@ const getSearchData = async (response) => {
     else
     {
         searchDataDiv.innerHTML = "Nothing Found!";
+    }
+};
+
+const getSearchPagination = async (response) => {
+    const paginationDiv = document.querySelector('div.searchPagination');
+    const value = sessionStorage.getItem('searchValue');
+    if(response.total_pages>1)
+    {
+        if(response.page>1)
+        {
+            const previous = document.createElement('h5');
+            previous.innerText = `Previous`;
+            previous.setAttribute('id','prevPage');
+            await paginationDiv.appendChild(previous);
+            const prevPage = document.querySelector('h5#prevPage');
+            prevPage.onclick = () => {
+                let curPage = document.querySelector('h5.currentPage');
+                curPage = Number(curPage.innerText);
+                searchValue(value, curPage-1);
+            };
+        }
+        for(let i=1;i<=response.total_pages;i++)
+        {
+            const num = document.createElement('h5');
+            num.setAttribute('id', `page-${i}`);
+            if(i===response.page)
+            {
+                num.setAttribute('class','currentPage');
+            }
+            num.innerText = `${i}`;
+            await paginationDiv.appendChild(num);
+            const pageNum = document.querySelector(`h5#page-${i}`);
+            pageNum.onclick = () => {
+                searchValue(value, i);
+            };
+        }
+        if(response.page<response.total_pages)
+        {
+            const next = document.createElement('h5');
+            next.innerText = `Next`;
+            next.setAttribute('id','nextPage');
+            await paginationDiv.appendChild(next);
+            const nextPage = document.querySelector('h5#nextPage');
+            nextPage.onclick = () => {
+                let curPage = document.querySelector('h5.currentPage');
+                curPage = Number(curPage.innerText);
+                searchValue(value, curPage+1);
+            };
+        }   
     }
 };
 
