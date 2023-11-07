@@ -93,25 +93,35 @@ nav .left img {
     color: rgba(3,37,65,1);
 }
 
-.trending {
+.trending, .popular {
     display: flex;
     flex-direction: column;
-    
+    border: 1px solid rgba(3,37,65,0.5);
+    border-left: none;
+    border-right: none;
 }
 
-.trending .headings, .trending .headings .buttons {
+.trending .headings, .trending .headings .buttons, .popular .headings, .popular .headings .buttons{
     display: flex;
     align-items: center;
     margin-left: 65px;
 }
 
-.trending .headings .buttons {
+.popular .headings {
+    margin-top: 30px;
+}
+
+.popular .headings h2 {
+    margin: 0;
+}
+
+.trending .headings .buttons, .popular .headings .buttons {
     margin-left: 20px;
     border: 1px solid rgba(3,37,65,1);
     border-radius: 20px;
 }
 
-.trending .headings .buttons button{
+.trending .headings .buttons button, .popular .headings .buttons button{
     margin: 0;
     border: none;
     padding: 5px 20px;
@@ -121,53 +131,55 @@ nav .left img {
     cursor: pointer;
 }
 
-.trending .headings .buttons #todaysTrending {
+.trending .headings .buttons #todaysTrending, .popular .headings .buttons #streamingPopular {
     background-color: rgba(3,37,65,1);
 }
 
-.trending .headings .buttons button h4 {
+.trending .headings .buttons button h4, .popular .headings .buttons button h4 {
     margin: 0;
     font-size: medium;
 }
 
-.trending .headings .buttons #todaysTrending h4 {
+.trending .headings .buttons #todaysTrending h4, .popular .headings .buttons #streamingPopular h4 {
     background: linear-gradient(to right,#c0fecf 0,#1ed5a9 100%);
     background-clip: linear-gradient(to right,#c0fecf 0,#1ed5a9 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.trending .trendingContents {
+.trending .trendingContents, .popular .popularContents {
     display: flex;
     overflow-y: hidden;
 }
 
-.trending .trendingContents h1{
+.trending .trendingContents h1, .popular .popularContents h1 {
     display: block;
     margin: 100px auto;
     align-self: center;
 }
 
-.trending .trendingContents div, .trending .trendingContents div img{
+.trending .trendingContents div, .trending .trendingContents div img, .popular .popularContents div, .popular .popularContents div img{
     width: 150px;
     cursor: pointer;
     margin: 20px 10px;
 }
 
-.trending .trendingContents .extraContent {
+.trending .trendingContents .extraContent, .popular .popularContents .extraContent {
     margin: 0 25px;
     width: 0;
 }
 
-.trending .trendingContents div img, .trending .trendingContents div h3 {
+.trending .trendingContents div img, .trending .trendingContents div h3, .popular .popularContents div img, .popular .popularContents div h3{
     margin: 0;
 }
 
-.trending .trendingContents div img {
+.trending .trendingContents div img, .popular .popularContents div img{
     border-radius: 10px;
+    min-height: 225px;
+    max-height: 225px;
 }
 
-.trending .trendingContents div h4 {
+.trending .trendingContents div h4, .popular .popularContents div h4{
     margin: 0;
     font-size: medium;
     font-weight: normal;
@@ -261,4 +273,12 @@ nav .left img {
     margin: 0;
     margin-top: 20px;
     margin-right: 20px;
+}
+
+.container .bgMovie .bgOverlay .movieContents {
+
+}
+
+.container .bgMovie .bgOverlay .movieContents span {
+    font-size: xxx-large;
 }

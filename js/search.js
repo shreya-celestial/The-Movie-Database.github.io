@@ -49,6 +49,6 @@ const searchListItem = async (data, parentElement) => {
     await parentElement.appendChild(div);
     const itemDiv = document.querySelector(`div#search-${data.id}`);
     itemDiv.onclick = () => {
-        itemClicked(data);  
+        itemClicked(data.id);  
     };
 };
