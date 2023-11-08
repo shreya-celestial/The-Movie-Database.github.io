@@ -7,11 +7,12 @@ body {
 
 nav {
     position: fixed;
-    width: 97%;
-    top: 0
+    width: 100%;
+    top: 0;
+    z-index: 1;
 }
 
-nav, nav div {
+.nav, .nav div {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -21,21 +22,39 @@ nav, nav div {
     color: #fff;
 }
 
-nav div h3 {
+.nav div h3 {
     font-size: medium;
 }
 
-nav div * {
+.nav div * {
     cursor: pointer;
 }
 
-nav .left {
+.nav .left {
     flex-basis: 22%;
 }
 
-nav .left img {
+.nav .left img {
     width: 65%;
     margin: 25px 0;
+}
+
+.nav .right img {
+    width: 29%;
+}
+
+.searchLogoDiv {
+    display: none;
+    text-align: center;
+    margin: -5px;
+}
+
+.searchLogoDiv input {
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 10px 20px;
+    line-height: 1.5;
 }
 
 .container {

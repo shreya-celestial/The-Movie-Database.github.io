@@ -2,6 +2,7 @@ const searchingForm = document.querySelector('form#searchStuff');
 
 searchingForm.onsubmit = (e) => {
     e.preventDefault();
+    searchLogoDiv.children[0].value = e.target.elements.search.value;
     const value = e.target.elements.search.value.replace(' ','%20');
     sessionStorage.setItem('searchValue', value);
     const page = 1;
@@ -26,6 +27,11 @@ const getSearchInitialHtml = async () => {
     const pagDiv = document.createElement('div');
     pagDiv.setAttribute('class', 'searchPagination');
     parentDiv.appendChild(pagDiv);
+    searchLogoDiv.style.display = "block";
+    if(searchLogoDiv.style.display === "block")
+    {
+        parentDiv.style.marginTop = "110px";
+    }
 };
 
 const getSearchData = async (response) => {

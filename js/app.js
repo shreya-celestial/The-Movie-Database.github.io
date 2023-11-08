@@ -1,96 +1,32 @@
-const containerDiv = document.querySelector('div.container');
-const dayButton = document.querySelector('button#todaysTrending');
-const weekButton = document.querySelector('button#thisWeekTrending');
+const homeLogo = document.querySelector('img#homeLogo');
+const searchLogo = document.querySelector('img#searchLogo');
 
-weekButton.onclick = () => {
-    setButtonStyles(weekButton,dayButton);
-    getTrending("week");
+homeLogo.onclick = () => {
+    location.reload();
 };
 
-dayButton.onclick = () => {
-    setButtonStyles(dayButton,weekButton);
-    getTrending("day");
-};
-
-const setButtonStyles = (clickedElement, otherElement) => {
-    clickedElement.style.cssText = `
-        background-color: rgba(3,37,65,1);
-    `;
-    clickedElement.children[0].style.cssText = `
-        background: linear-gradient(to right,#c0fecf 0,#1ed5a9 100%);
-        background-clip: linear-gradient(to right,#c0fecf 0,#1ed5a9 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    `;
-    otherElement.style.cssText = `
-        background-color: #fff;
-        color: rgba(3,37,65,1);
-    `;
-    otherElement.children[0].style.cssText = `
-        color: rgba(3,37,65,1);
-        background-color: #fff;
-        -webkit-text-fill-color: unset;
-    `;
-};
-
-const getTrending = async (dayOrWeek) => {
-    const response = await getTrendingContents(dayOrWeek);
-    const trendingData = response.results;
-    loadTrendingHtml(trendingData);
-};
-
-const loadTrendingHtml = (trendingData) => {
-    const trendingContentsDiv = document.querySelector('div.trendingContents');
-    trendingContentsDiv.innerHTML = `
-        <div class="extraContent"><div>
-    `;
-    trendingData.forEach((data)=>{
-        trendingItem(data, trendingContentsDiv);
-    });
-    trendingContentsDiv.innerHTML += `
-        <div class="extraContent"><div>
-    `;
-};
-
-const trendingItem = async (data, parentElement) => {
-    const div = document.createElement('div');
-    div.setAttribute('id',`div-${data.id}`);
-    let imgSrc = `https://image.tmdb.org/t/p/original${data.poster_path}`;
-    if(data.poster_path === null)
+let count = 0;
+searchLogo.onclick = () => {
+    count++;
+    if(count === 0 || count%2 === 0 )
     {
-        imgSrc = "./assets/noImg.jpg";
+        searchLogoDiv.style.display = "none";
     }
-    div.innerHTML = `
-        <img src=${imgSrc}>
-        <h3>${data.title || data.name}</h3>
-        <h4>${moment(data.release_date).format("MMM DD, YYYY")}</h4>
-    `;
-    await parentElement.appendChild(div);
-
-    const itemDiv = document.querySelector(`div#div-${data.id}`);
-    itemDiv.onclick = () => {
-        itemClicked(data.id, data.media_type);        
-    };
+    else
+    {
+        searchLogoDiv.style.display = "block";
+        const bgMovieDiv = document.querySelector('div.bgMovie');
+        if(bgMovieDiv)
+        {
+            bgMovieDiv.style.marginTop = '105px';
+        }
+    }
 };
 
-const itemClicked = async (id, genre = "movie") => {
-    const data = await getClickedItem(id, genre);
-    console.log(data);
-    containerDiv.innerHTML = `
-        <div class="bgMovie">
-            <div class="bgOverlay">
-                <img src="https://image.tmdb.org/t/p/original${data.poster_path}">
-                <div class = "movieContents">
-                    <span><b>${data.title || data.name}</b> (${moment(data.release_date).format("YYYY")})</span>
-                </div>
-            </div>
-        </div>
-    `;
-    const bgMovieDiv = document.querySelector('div.bgMovie');
-    bgMovieDiv.style.cssText = `
-        background-image: url('https://image.tmdb.org/t/p/original${data.backdrop_path}');
-    `;
+searchLogoDiv.onsubmit = (e) => {
+    e.preventDefault();
+    const value = e.target.elements.search.value.replace(' ','%20');
+    sessionStorage.setItem('searchValue', value);
+    const page = 1;
+    searchValue(value, page);
 };
-
-getTrending("day");
-
