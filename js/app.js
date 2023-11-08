@@ -69,12 +69,12 @@ const trendingItem = async (data, parentElement) => {
 
     const itemDiv = document.querySelector(`div#div-${data.id}`);
     itemDiv.onclick = () => {
-        itemClicked(data.id);        
+        itemClicked(data.id, data.media_type);        
     };
 };
 
-const itemClicked = async (id) => {
-    const data = await getMovieItem(id);
+const itemClicked = async (id, genre = "movie") => {
+    const data = await getClickedItem(id, genre);
     console.log(data);
     containerDiv.innerHTML = `
         <div class="bgMovie">

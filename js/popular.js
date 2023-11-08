@@ -34,23 +34,23 @@ const resetPopularButtons = () => {
 const getPopular = async (genre) => {
     const response = await getPopularContents(genre);
     const popularData = response.results;
-    loadPopularHtml(popularData);
+    loadPopularHtml(popularData, genre);
 };
 
-const loadPopularHtml = (popularData) => {
+const loadPopularHtml = (popularData, genre) => {
     const popularContentsDiv = document.querySelector('div.popularContents');
     popularContentsDiv.innerHTML = `
         <div class="extraContent"><div>
     `;
     popularData.forEach((data)=>{
-        popularItem(data, popularContentsDiv);
+        popularItem(data, popularContentsDiv, genre);
     });
     popularContentsDiv.innerHTML += `
         <div class="extraContent"><div>
     `;
 };
 
-const popularItem = async (data, parentElement) => {
+const popularItem = async (data, parentElement, genre) => {
     const div = document.createElement('div');
     div.setAttribute('id',`popular-${data.id}`);
     let imgSrc = `https://image.tmdb.org/t/p/original${data.poster_path}`;
@@ -64,10 +64,9 @@ const popularItem = async (data, parentElement) => {
         <h4>${moment(data.release_date).format("MMM DD, YYYY")}</h4>
     `;
     await parentElement.appendChild(div);
-
     const itemDiv = document.querySelector(`div#popular-${data.id}`);
     itemDiv.onclick = () => {
-        itemClicked(data.id);        
+        itemClicked(data.id, genre);        
     };
 };
 
