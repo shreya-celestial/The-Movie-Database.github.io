@@ -11,6 +11,11 @@ searchLogo.onclick = () => {
     if(count === 0 || count%2 === 0 )
     {
         searchLogoDiv.style.display = "none";
+        const bgMovieDiv = document.querySelector('div.bgMovie');
+        if(bgMovieDiv)
+        {
+            bgMovieDiv.style.marginTop = 'unset';
+        }
     }
     else
     {

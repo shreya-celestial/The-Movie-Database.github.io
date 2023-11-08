@@ -32,6 +32,10 @@ const getSearchInitialHtml = async () => {
     {
         parentDiv.style.marginTop = "110px";
     }
+    else
+    {  
+        parentDiv.style.marginTop = "unset";
+    }
 };
 
 const getSearchData = async (response) => {
