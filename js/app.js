@@ -1,5 +1,7 @@
 const homeLogo = document.querySelector('img#homeLogo');
 const searchLogo = document.querySelector('img#searchLogo');
+const movieNav = document.querySelector('h3#movieNav');
+const movieOptionsDiv = document.querySelector('div#movieNavOptionsDiv');
 
 homeLogo.onclick = () => {
     location.reload();
@@ -34,4 +36,27 @@ searchLogoDiv.onsubmit = (e) => {
     sessionStorage.setItem('searchValue', value);
     const page = 1;
     searchValue(value, page);
+};
+
+movieNav.onmouseover = async (e) => {
+    const left = e.clientX;
+    const top = e.clientY;
+    movieOptionsDiv.style.left = `${left}px`;
+    movieOptionsDiv.style.top = `${top}px`;
+    movieOptionsDiv.style.display = `block`;
+};
+
+movieNav.onmouseout = () => {
+    if(!movieOptionsDiv.matches(':hover'))
+    {
+        movieOptionsDiv.style.display = "none";
+    }
+};
+
+movieOptionsDiv.onmouseover = () => {
+    movieOptionsDiv.style.display = "block";
+};
+
+movieOptionsDiv.onmouseout = () => {
+    movieOptionsDiv.style.display = "none";
 };
