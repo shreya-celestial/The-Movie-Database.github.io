@@ -263,13 +263,13 @@ nav {
 }
 
 .container .bgMovie .bgOverlay {
-    min-height: 80vh;
+    min-height: 88.9vh;
     background-image: linear-gradient(to right, rgba(31.5, 31.5, 31.5, 1) 30%, rgba(31.5, 31.5, 31.5, 0.9) 50%, rgba(31.5, 31.5, 31.5, 0.30) 100%);
     display: flex;
 }
 
 .container .bgMovie .bgOverlay img {
-    width: 300px;
+    width: 320px;
     margin: 30px 50px;
     border-radius: 10px;
 }
@@ -359,6 +359,41 @@ nav {
 
 .container .bgMovie .bgOverlay .movieContents span {
     font-size: xxx-large;
+    margin-top: 100px;
+}
+
+.container .bgMovie .bgOverlay .movieContents .minorDetailsP {
+    margin: 0;
+}
+
+.container .bgMovie .bgOverlay #wishlist{
+    background: white;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    margin: 0;
+    width: 35px;
+    margin-top: 10px;
+    background-clip: content-box;
+    cursor: pointer;
+}
+
+.container .bgMovie .bgOverlay .wishlistMsg{
+    display: none;
+    position: absolute;
+    background: rgba(3,37,65,1);
+    color: #fff;
+    padding: 5px 20px;
+    border-radius: 5px;
+}
+
+.container .bgMovie .bgOverlay h4{
+    margin: 0;
+}
+
+.container .bgMovie .bgOverlay .movieOverview {
+    margin: 0;
+    margin-right: 50px;
 }
 
 .optionHeadings {

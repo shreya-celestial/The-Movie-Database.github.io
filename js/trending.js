@@ -72,3 +72,5 @@ const trendingItem = async (data, parentElement) => {
         itemClicked(data.id, data.media_type);        
     };
 };
+
+getTrending("day");
