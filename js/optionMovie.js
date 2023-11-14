@@ -253,10 +253,18 @@ const sortContentDivDisplay = (sortDDDisplayCount) => {
 const loadOptionMovieHtml = (response) => {
     const data = response.results;
     const optionsContents = document.querySelector('div.optionsContents');
-    optionsContents.innerHTML = "";
-    data.forEach((dataItem)=>{
-        optionItem(dataItem, optionsContents);
-    });
+    if(data.length > 0)
+    {
+        optionsContents.innerHTML = "";
+        data.forEach((dataItem)=>{
+            optionItem(dataItem, optionsContents);
+        });
+    }
+    else
+    {
+        option = '';
+        optionsContents.innerHTML = "<h3>Nothing to show here</h3>";
+    }
 };
 
 const optionItem = async (data, parentElement) => {
