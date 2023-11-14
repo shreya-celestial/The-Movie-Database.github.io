@@ -56,7 +56,7 @@ const getPopularContents = async (genre) => {
     return popularData;
 };
 
-const getMoviePopularOption = async () => {
+const getMoviePopularOption = async (page) => {
     const options = {
         method: 'GET',
         headers: {
@@ -64,7 +64,21 @@ const getMoviePopularOption = async () => {
             Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNzgyNzM0OGI4ZWY5OGI3NGUyOTg4ODk0NGJhZTZlYyIsInN1YiI6IjY1NDMzZmVmZTFhZDc5MDBlYTU3OWM2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-87S7MvmbnW2pQX9XdN87KazRKzPDGRa_aZwO8BttGI'
         }
     };
-    const url = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=1`;
+    const url = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`;
+    const response = await fetch(url, options);
+    const data = await response.json();
+    return data;
+};
+
+const getMovieTopRatedOption = async (page) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNzgyNzM0OGI4ZWY5OGI3NGUyOTg4ODk0NGJhZTZlYyIsInN1YiI6IjY1NDMzZmVmZTFhZDc5MDBlYTU3OWM2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-87S7MvmbnW2pQX9XdN87KazRKzPDGRa_aZwO8BttGI'
+        }
+    };
+    const url = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${page}`;
     const response = await fetch(url, options);
     const data = await response.json();
     return data;
@@ -79,6 +93,20 @@ const getAllGenres = async () => {
         }
     };
     const url = `https://api.themoviedb.org/3/genre/movie/list?language=en`;
+    const response = await fetch(url, options);
+    const data = await response.json();
+    return data;
+};
+
+const getFilteredData = async (filterParams, page) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNzgyNzM0OGI4ZWY5OGI3NGUyOTg4ODk0NGJhZTZlYyIsInN1YiI6IjY1NDMzZmVmZTFhZDc5MDBlYTU3OWM2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-87S7MvmbnW2pQX9XdN87KazRKzPDGRa_aZwO8BttGI'
+        }
+    };
+    const url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=${filterParams.sort}&vote_average.gte=${filterParams.minScore}&vote_average.lte=${filterParams.maxScore}&vote_count.gte=${filterParams.minVotes}&with_genres=${filterParams.genres}`;
     const response = await fetch(url, options);
     const data = await response.json();
     return data;

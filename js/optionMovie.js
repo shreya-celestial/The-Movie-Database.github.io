@@ -1,21 +1,40 @@
 const popularMovieOption = document.querySelector('li#popularMovieOption');
+const topRatedMovieOption = document.querySelector('li#topRatedMovieOption');
+let option = '';
+let optionPage = '';
+
+topRatedMovieOption.onclick = async () => {
+    const heading = 'Top Rated';
+    option = 'topRated';
+    optionPage = 1;
+    const dataList = await getMovieTopRatedOption(optionPage);
+    loadOptionsInitialHtml(dataList, heading);
+};
+
 popularMovieOption.onclick = async () => {
+    const heading = 'Popular';
+    option = 'popular';
+    optionPage = 1;
+    const dataList = await getMoviePopularOption(optionPage);
+    loadOptionsInitialHtml(dataList, heading);
+};
+
+const loadOptionsInitialHtml = (dataList, heading) => {
+    window.scrollTo(0, 0); 
     containerDiv.innerHTML = ` 
-        <h2 class="optionHeadings">Popular Movies</h2>
-        <div class = "popularOptionDiv">
+        <h2 class="optionHeadings">${heading} Movies</h2>
+        <div class = "optionsDiv">
             <div class="filters"></div>
-            <div class="popularOptionContents">
+            <div class="optionsContents">
                 <h1>Loading...</h1>
             </div> 
         </div>
     `;
-    loadPopularFilterHtml();
-    const dataList = await getMoviePopularOption();
-    console.log(dataList.results);
-    loadpopularMovieHtml(dataList.results);
+    loadFiltersHtml();
+    loadOptionMovieHtml(dataList);
 };
 
-const loadPopularFilterHtml = async () => {
+const allFiltersHtml = () => {
     const filters = document.querySelector('div.filters');
     const form = document.createElement('form');
     form.setAttribute('id','setAllFilters');
@@ -28,8 +47,8 @@ const loadPopularFilterHtml = async () => {
             <div class="sortContentDiv">
                 <label for="sort">Sort Results By</label>
                 <select name="sort" id="sortingDD">
-                    <option value="popularity.asc">Popularity Ascending</option>
                     <option value="popularity.desc">Popularity Descending</option>
+                    <option value="popularity.asc">Popularity Ascending</option>
                 </select>
             </div>
         </div>
@@ -53,8 +72,8 @@ const loadPopularFilterHtml = async () => {
                             <span class="range-selected"></span>
                         </div>
                         <div class="range-input">
-                            <input type="range" class="min" min="0" max="10" value="0" step="1">
-                            <input type="range" class="max" min="0" max="10" value="10" step="1">
+                            <input type="range" class="min" name="minScore" min="0" max="10" value="0" step="1">
+                            <input type="range" class="max" name="maxScore" min="0" max="10" value="10" step="1">
                         </div>
                     </div>
                 </div>
@@ -67,14 +86,19 @@ const loadPopularFilterHtml = async () => {
                 </div>
             </div>
         </div>
-        <button class="filterSearchButton">Search</button>
+        <button class="filterSearchButton" id="filterSearchButton" disabled="true">Search</button>
     `;
-    await filters.appendChild(form);
-    loadAllGenres();
-    loadPopularFilterFunctions();
+    filters.appendChild(form);
 };
 
-const loadAllGenres = async () => {
+const loadFiltersHtml = async () => {
+    await allFiltersHtml();
+    const genresSelected = new Map();
+    loadAllGenres(genresSelected);
+    loadOptionFilterFunctions(genresSelected);
+};
+
+const loadAllGenres = async (genresSelected) => {
     const allGenres = document.querySelector('div.allGenres');
     const genreList = (await getAllGenres()).genres;
     genreList.forEach(async (genre)=>{
@@ -85,29 +109,33 @@ const loadAllGenres = async () => {
         const currentDiv = document.querySelector(`div#genre-${genre.id}`);
         let count = 0;
         currentDiv.onclick = () => {
-            count = genreClicked(count, currentDiv);
+            count = genreClicked(count, currentDiv, genresSelected);
         };
     });
 };
 
-const genreClicked = (count, currentDiv) => {
+const genreClicked = (count, currentDiv, map) => {
     count++;
+    document.querySelector('button#filterSearchButton').removeAttribute('disabled');
     if(count===0 || count%2!==0)
     {
         currentDiv.style.backgroundColor = "rgba(1,180,228,1)";
         currentDiv.style.border = "none";
         currentDiv.style.color = "#fff";
+        const id = currentDiv.id.split('genre-');
+        map.set(currentDiv.id, id[1]);
     }
     else
     {
         currentDiv.style.backgroundColor = "unset";
         currentDiv.style.border = "1px solid rgb(197, 197, 197)";
         currentDiv.style.color = "unset";
+        map.delete(currentDiv.id);
     }
     return count;
 };
 
-const loadPopularFilterFunctions = () => {
+const loadOptionFilterFunctions = (genresSelected) => {
     let sortDDDisplayCount = 0;
     let filterDDDisplayCount = 0;
     const setAllFilters = document.querySelector('form#setAllFilters');
@@ -120,27 +148,41 @@ const loadPopularFilterFunctions = () => {
     const sortingDD = document.querySelector('select#sortingDD');
     const filterLabelDiv = document.querySelector('div.filterLabelDiv');
 
-    setAllFilters.onsubmit = (e) => {
+    setAllFilters.onsubmit = async (e) => {
         e.preventDefault();
-        console.log(e);
+        window.scrollTo(0, 0); 
+        const genreString = await genresToString(genresSelected);
+        const filterParams = {
+            sort: e.target.elements.sort.value,
+            genres: genreString,
+            minScore: e.target.elements.minScore.value,
+            maxScore: e.target.elements.maxScore.value,
+            minVotes: e.target.elements.minVotes.value
+        };
+        sessionStorage.setItem('params', JSON.stringify(filterParams));
+        option = 'params';
+        optionPage = 1;
+        const data = await getFilteredData(filterParams, optionPage);
+        loadOptionMovieHtml(data);
     };
     sortLabelDiv.onclick = () => {
         sortDDDisplayCount = sortContentDivDisplay(sortDDDisplayCount);
     };
     sortingDD.onchange = () => {
-        console.log(sortingDD.value);
+        document.querySelector('button#filterSearchButton').removeAttribute('disabled');
     };
     rangeInput.forEach((input) => {
         rangeDisplay.style.display = "none";
         rangeChanging(input, rangeInput, range, rangeDisplay);
     });
-    minVotesId.oninput = (e)=> {
+    minVotesId.oninput = ()=> {
         value = (minVotesId.value-minVotesId.min)/(minVotesId.max-minVotesId.min)*100;
         minVotesId.style.background = 'linear-gradient(to right, rgba(1,180,228,1) 0%, rgba(1,180,228,1) ' + value + '%, #e1e9f6 ' + value + '%, #e1e9f6 100%)';
         votesRangeDisplay.innerText = `${parseInt(minVotesId.value)}`;
         votesRangeDisplay.style.display = "block";
+        document.querySelector('button#filterSearchButton').removeAttribute('disabled');
     };
-    minVotesId.onmouseleave = (e) => {
+    minVotesId.onmouseleave = () => {
         votesRangeDisplay.style.display = "none";
     };
     filterLabelDiv.onclick = () => {
@@ -148,16 +190,28 @@ const loadPopularFilterFunctions = () => {
     };
 };
 
+const genresToString = (genresSelected) => {
+    let str = '';
+    genresSelected.forEach((value)=>{
+        str += (value + '%2C');
+    });
+    if(str.length)
+        return str.substring(0, str.length - 3);
+    else
+        return str;
+};
+
 const rangeChanging = (input, rangeInput, range, rangeDisplay) => {
-    input.oninput = (e) => {
+    input.oninput = () => {
         const minRange = parseInt(rangeInput[0].value);
         const maxRange = parseInt(rangeInput[1].value);
         range.style.left = (minRange / rangeInput[0].max) * 100 + "%";
         range.style.right = 100 - (maxRange / rangeInput[1].max) * 100 + "%";
         rangeDisplay.innerText = `${minRange} - ${maxRange}`;
         rangeDisplay.style.display = 'block';
+        document.querySelector('button#filterSearchButton').removeAttribute('disabled');
     };
-    input.onmouseleave = (e) => {
+    input.onmouseleave = () => {
         rangeDisplay.style.display = "none";
     };
 };
@@ -196,17 +250,18 @@ const sortContentDivDisplay = (sortDDDisplayCount) => {
     return sortDDDisplayCount;
 };
 
-const loadpopularMovieHtml = (data) => {
-    const popularOptionContents = document.querySelector('div.popularOptionContents');
-    popularOptionContents.innerHTML = "";
+const loadOptionMovieHtml = (response) => {
+    const data = response.results;
+    const optionsContents = document.querySelector('div.optionsContents');
+    optionsContents.innerHTML = "";
     data.forEach((dataItem)=>{
-        optionItem(dataItem, popularOptionContents);
+        optionItem(dataItem, optionsContents);
     });
 };
 
 const optionItem = async (data, parentElement) => {
     const div = document.createElement('div');
-    div.setAttribute('class', 'moviesOfPopularOption');
+    div.setAttribute('class', 'moviesOfOption');
     div.setAttribute('id',`div-${data.id}`);
     let imgSrc = `https://image.tmdb.org/t/p/original${data.poster_path}`;
     if(data.poster_path === null)
@@ -225,10 +280,7 @@ const optionItem = async (data, parentElement) => {
     };
 };
 
-
-
-
-window.addEventListener('scroll', () => {
+window.addEventListener('scroll', async () => {
     const {
         scrollTop,
         scrollHeight,
@@ -236,9 +288,32 @@ window.addEventListener('scroll', () => {
     } = document.documentElement;
 
     if (scrollTop + clientHeight >= scrollHeight - 5) {
-        if(document.querySelector('div.moviesOfPopularOption'))
+        if(document.querySelector('div.moviesOfOption'))
         {
-            console.log('fgb');
+            const optionsContents = document.querySelector('div.optionsContents');
+            let dataList = '';
+            optionPage++;
+            if(option === 'popular')
+            {
+                dataList = await getMoviePopularOption(optionPage);
+            }else if(option === 'topRated')
+            {
+                dataList = await getMovieTopRatedOption(optionPage);
+            }else if(option === 'params')
+            {
+                const filterParams = JSON.parse(sessionStorage.getItem('params'));
+                dataList = await getFilteredData(filterParams, optionPage);
+            }
+            if(dataList.results === undefined || dataList.results.length === 0)
+            {
+                option = '';
+            }
+            else
+            {
+                dataList.results.forEach((dataItem)=>{
+                    optionItem(dataItem, optionsContents);
+                });
+            }
         }
     }
 }, {

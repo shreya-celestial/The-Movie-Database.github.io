@@ -365,7 +365,7 @@ nav {
     margin: 100px 0 0 20px;
 }
 
-.popularOptionDiv {
+.optionsDiv {
     display: flex;
 }
 
@@ -447,35 +447,35 @@ nav {
     cursor: pointer;
 }
 
-.popularOptionContents {
+.optionsContents {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
 }
 
-.popularOptionContents h1 {
+.optionsContents h1 {
     display: block;
     margin: 100px auto;
     align-self: center;
 }
 
-.popularOptionContents div, .popularOptionContents div img {
+.optionsContents div, .optionsContents div img {
     width: 190px;
     cursor: pointer;
     margin: 20px 10px;
 }
 
-.popularOptionContents div img, .popularOptionContents div h3 {
+.optionsContents div img, .optionsContents div h3 {
     margin: 0;
 }
 
-.popularOptionContents div img{
+.optionsContents div img{
     border-radius: 10px;
     min-height: 285px;
     max-height: 285px;
 }
 
-.popularOptionContents div h4{
+.optionsContents div h4{
     margin: 0;
     font-size: medium;
     font-weight: normal;
@@ -589,13 +589,28 @@ nav {
     -moz-appearance: none;
 }
 
-.filterSearchButton {
+.filterSearchButton{
     width: 100%;
     margin-top: 20px;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 20px;
     outline: none;
     border: none;
+    font-weight: bold;
+    font-size: medium;
+    background-color: rgba(1,180,228,1);
+    color: #fff;
+    cursor: pointer;
+}
+
+.filterSearchButton:hover {
     background-color: rgba(3,37,65,1);
     color: #fff;
+}
+
+.filterSearchButton:disabled {
+    font-size: medium;
+    background-color: rgba(228,228,228,.7);
+    color: rgba(0,0,0,.5);
+    cursor: default;
 }
