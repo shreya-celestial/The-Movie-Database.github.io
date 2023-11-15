@@ -734,3 +734,10 @@ nav {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+.userWatchList h5 {
+    align-self: center;
+    justify-self: center;
+    text-align: center;
+    margin: 70px auto;
+}

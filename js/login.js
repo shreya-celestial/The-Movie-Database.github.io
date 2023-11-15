@@ -55,13 +55,21 @@ const getProfilePage = async (user) => {
 
 const switchedGenre = async (user, genre = "movies") => {
     const userWatchList = document.querySelector('div.userWatchList');
-    userWatchList.innerHTML = '';
+    userWatchList.innerHTML = '<h5>Loading...</h5>';
     profilePage = 1;
     movieOrShow = genre;
     const dataList = await getWatchlist(user.id, profilePage, movieOrShow);
-    dataList.results.forEach((data)=>{
-        searchListItem(data, userWatchList);
-    });
+    if(dataList.results.length === 0)
+    {
+        userWatchList.innerHTML = '<h5>Nothing To Show!</h5>';
+    }
+    else
+    {
+        userWatchList.innerHTML = '';
+        dataList.results.forEach((data)=>{
+            searchListItem(data, userWatchList);
+        });
+    }
 };
 
 if(sessionStorage.getItem('user'))
