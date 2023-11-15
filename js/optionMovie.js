@@ -288,7 +288,7 @@ const optionItem = async (data, parentElement) => {
     };
 };
 
-window.addEventListener('scroll', async () => {
+window.onscroll = async () => {
     const {
         scrollTop,
         scrollHeight,
@@ -324,6 +324,4 @@ window.addEventListener('scroll', async () => {
             }
         }
     }
-}, {
-    passive: true
-});
+};

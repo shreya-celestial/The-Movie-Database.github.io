@@ -50,8 +50,21 @@ const itemClicked = async (id, genre = "movie") => {
         bgMovieDiv.style.marginTop = "105px";
     }
     const wishlist = document.querySelector('img#wishlist');
+    wishlist.onclick = async () => {
+        if(sessionStorage.getItem('user'))
+        {
+            const accountId = sessionStorage.getItem('accountId');
+            const body = {
+                media_type: (data.last_air_date ? 'tv' : 'movie'), 
+                media_id: data.id, 
+                watchlist: true
+            };
+            await addToWatchlist(body, accountId);
+            wishlist.style.background = 'none';
+        }
+    };
     wishlist.onmouseover = (e) => {
-        if(!sessionStorage.getItem('loggedIn'))
+        if(!sessionStorage.getItem('user'))
         {
             const msg = document.querySelector('div.wishlistMsg');
             const left = e.clientX;
