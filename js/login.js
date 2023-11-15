@@ -68,28 +68,3 @@ if(sessionStorage.getItem('user'))
 {
     login();
 }
-
-window.onscroll = async () => {
-    const {
-        scrollTop,
-        scrollHeight,
-        clientHeight
-    } = document.documentElement;
-
-    if (scrollTop + clientHeight >= scrollHeight - 5) {
-        if(document.querySelector('div.userWatchList'))
-        {
-            profilePage++;
-            const user = JSON.parse(sessionStorage.getItem('user'));
-            const userWatchList = document.querySelector('div.userWatchList');
-            let dataList = await getWatchlist(user.id, profilePage, movieOrShow);
-            dataList.results.forEach((data)=>{
-                searchListItem(data, userWatchList);
-            });
-            if(dataList.results.length < 20)
-            {
-                dataList = '';
-            }
-        }
-    }
-};
