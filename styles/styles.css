@@ -741,3 +741,19 @@ nav {
     text-align: center;
     margin: 70px auto;
 }
+
+.userWatchList div .deleteDiv {
+    box-shadow: none;
+    width: fit-content;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.userWatchList div .deleteDiv img {
+    width: 30px;
+    min-height: 20px;
+    margin-right: 20px;
+}

@@ -67,9 +67,41 @@ const switchedGenre = async (user, genre = "movies") => {
     {
         userWatchList.innerHTML = '';
         dataList.results.forEach((data)=>{
-            searchListItem(data, userWatchList);
+            watchListContents(data, userWatchList);
         });
     }
+};
+
+const watchListContents = async (data, userWatchList) => {
+    searchListItem(data, userWatchList);
+    const div = document.querySelector(`div#search-${data.id}`);
+    const delDiv = document.createElement('div');
+    delDiv.setAttribute('class', 'deleteDiv');
+    delDiv.setAttribute('id', `del-${data.id}`);
+    delDiv.innerHTML = `
+        <img src="./assets/delete.png" class="delButton" alt="">
+    `;
+    await div.appendChild(delDiv);
+    div.onclick = () => {
+        if(movieOrShow === 'movies'){
+            itemClicked(data.id, 'movie');  
+        }else if(movieOrShow === 'tv'){
+            itemClicked(data.id, movieOrShow);  
+        }
+    };
+    const deleteFromWatchlist = document.querySelector(`div#del-${data.id}`);
+    deleteFromWatchlist.onclick = async (e) => {
+        e.stopPropagation();
+        const accountId = sessionStorage.getItem('accountId');
+        const body = {
+            media_type: (data.first_air_date ? 'tv' : 'movie'), 
+            media_id: data.id, 
+            watchlist: false
+        };
+        await addToWatchlist(body, accountId);
+        const user = await JSON.parse(sessionStorage.getItem('user'));
+        switchedGenre(user, (data.first_air_date ? 'tv' : 'movies'));
+    };
 };
 
 if(sessionStorage.getItem('user'))

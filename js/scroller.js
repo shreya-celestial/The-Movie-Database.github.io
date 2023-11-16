@@ -41,7 +41,7 @@ window.onscroll = async () => {
             const userWatchList = document.querySelector('div.userWatchList');
             let dataList = await getWatchlist(user.id, profilePage, movieOrShow);
             dataList.results.forEach((data)=>{
-                searchListItem(data, userWatchList);
+                watchListContents(data, userWatchList);
             });
             if(dataList.results.length < 20)
             {
