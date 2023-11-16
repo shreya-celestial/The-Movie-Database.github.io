@@ -10,6 +10,7 @@ loginButton.onclick = async () => {
     window.scrollTo(0, 0);
     const user = JSON.parse(sessionStorage.getItem('user'));
     getProfilePage(user);
+    movieOrShow = 'movies';
 };
 
 const login = async () => {
@@ -25,7 +26,7 @@ const getProfilePage = async (user) => {
     containerDiv.innerHTML = `
         <div class="bgUserDetails">
             <div class="userDetails">
-                <span class="userLogo">S</span>
+                <span class="userLogo">${user.username.substring(0,1).toUpperCase()}</span>
                 <h1>${user.username}</h1>
             </div>
         </div>
