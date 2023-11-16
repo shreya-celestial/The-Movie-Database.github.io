@@ -3,8 +3,6 @@ const searchLogo = document.querySelector('img#searchLogo');
 const movieNav = document.querySelector('h3#movieNav');
 const movieOptionsDiv = document.querySelector('div#movieNavOptionsDiv');
 
-sessionStorage.setItem('accountId', 20655729);
-
 homeLogo.onclick = () => {
     location.reload();
     sessionStorage.removeItem('params');

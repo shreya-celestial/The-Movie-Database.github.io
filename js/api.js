@@ -112,20 +112,6 @@ const getFilteredData = async (filterParams, page) => {
     return data;
 };
 
-const getUserDetails = async (accountId) => {
-    const options = {
-        method: 'GET',
-        headers: {
-            accept: 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNzgyNzM0OGI4ZWY5OGI3NGUyOTg4ODk0NGJhZTZlYyIsInN1YiI6IjY1NDMzZmVmZTFhZDc5MDBlYTU3OWM2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-87S7MvmbnW2pQX9XdN87KazRKzPDGRa_aZwO8BttGI'
-        }
-    };
-    const url = `https://api.themoviedb.org/3/account/${accountId}`;
-    const response = await fetch(url, options);
-    const data = await response.json();
-    return data;
-};
-
 const addToWatchlist = (body, accountId) => {
     const options = {
         method: 'POST',
@@ -149,6 +135,65 @@ const getWatchlist = async (id, page, genre) => {
         }
     };
     const url = `https://api.themoviedb.org/3/account/${id}/watchlist/${genre}?language=en-US&page=${page}&sort_by=created_at.asc`;
+    const response = await fetch(url, options);
+    const data = await response.json();
+    return data;
+};
+
+const getRequestToken = async () => {
+    const options = {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNzgyNzM0OGI4ZWY5OGI3NGUyOTg4ODk0NGJhZTZlYyIsInN1YiI6IjY1NDMzZmVmZTFhZDc5MDBlYTU3OWM2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-87S7MvmbnW2pQX9XdN87KazRKzPDGRa_aZwO8BttGI'
+        }
+    };
+    const url = `https://api.themoviedb.org/3/authentication/token/new`;
+    const response = await fetch(url, options);
+    const data = await response.json();
+    return data;
+};
+
+const createSessionWithLogin = async (body) => {
+    let options = {
+        method: 'POST',
+        headers: {
+            accept: 'application/json',
+            'content-type': 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNzgyNzM0OGI4ZWY5OGI3NGUyOTg4ODk0NGJhZTZlYyIsInN1YiI6IjY1NDMzZmVmZTFhZDc5MDBlYTU3OWM2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-87S7MvmbnW2pQX9XdN87KazRKzPDGRa_aZwO8BttGI'
+        },
+        body: JSON.stringify(body)
+    };
+    let url = `https://api.themoviedb.org/3/authentication/token/validate_with_login`;
+    let response = await fetch(url, options).catch(err => console.error(err));
+    let data = await response.json();
+    body = {
+        request_token: data.request_token
+    };
+    options = {
+        method: 'POST',
+        headers: {
+            accept: 'application/json',
+            'content-type': 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNzgyNzM0OGI4ZWY5OGI3NGUyOTg4ODk0NGJhZTZlYyIsInN1YiI6IjY1NDMzZmVmZTFhZDc5MDBlYTU3OWM2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-87S7MvmbnW2pQX9XdN87KazRKzPDGRa_aZwO8BttGI'
+        },
+        body: JSON.stringify(body)
+    };
+    url = `https://api.themoviedb.org/3/authentication/session/new`;
+    response = await fetch(url, options);
+    data = await response.json();
+    return data;
+};
+
+const getAccountId = async (session_id) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNzgyNzM0OGI4ZWY5OGI3NGUyOTg4ODk0NGJhZTZlYyIsInN1YiI6IjY1NDMzZmVmZTFhZDc5MDBlYTU3OWM2YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-87S7MvmbnW2pQX9XdN87KazRKzPDGRa_aZwO8BttGI'
+        }
+    };
+    const url = `https://api.themoviedb.org/3/account?api_key=a7827348b8ef98b74e29888944bae6ec&session_id=${session_id}`;
     const response = await fetch(url, options);
     const data = await response.json();
     return data;

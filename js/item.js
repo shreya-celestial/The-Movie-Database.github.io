@@ -57,13 +57,13 @@ const itemClicked = async (id, genre = "movie") => {
     wishlist.onclick = async () => {
         if(sessionStorage.getItem('user'))
         {
-            const accountId = sessionStorage.getItem('accountId');
+            const user = JSON.parse(sessionStorage.getItem('user'));
             const body = {
                 media_type: (data.last_air_date ? 'tv' : 'movie'), 
                 media_id: data.id, 
                 watchlist: true
             };
-            await addToWatchlist(body, accountId);
+            await addToWatchlist(body, user.id);
             wishlist.style.background = 'none';
         }
     };

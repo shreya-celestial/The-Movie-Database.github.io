@@ -757,3 +757,42 @@ nav {
     min-height: 20px;
     margin-right: 20px;
 }
+
+.initialLoginPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.initialLoginPage #loginElementsDiv {
+    display: flex;
+    flex-direction: column;
+    max-width: 80%;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.initialLoginPage #loginElementsDiv h2{
+    margin-top: 50px;
+}
+
+.initialLoginPage #loginElementsDiv input {
+    width: 100%;
+    margin-bottom: 20px;
+    line-height: 1.5;
+    height: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #bebebe;
+    outline: none;
+}
+
+.initialLoginPage #loginElementsDiv button {
+    background-color: rgba(1,180,228,1);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+}
