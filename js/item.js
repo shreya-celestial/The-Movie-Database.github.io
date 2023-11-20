@@ -1,25 +1,28 @@
 const searchLogoDiv = document.querySelector('form.searchLogoDiv');
 const itemClicked = async (id, genre = "movie") => {
     const data = await getClickedItem(id, genre);
-    let imgSrc = `https://image.tmdb.org/t/p/original${data.poster_path}`;
+    let imgSrc = `${imgUrl}${data.poster_path}`;
     if(data.poster_path === undefined || data.poster_path === null)
     {
         imgSrc = "./assets/noImg.jpg";
     }
+
     let genresInvolved = '';
-    if(data.genres.length>0)
+    if(data.genres.length > 0)
     {
         genresInvolved = '&bull;  ';
         data.genres.forEach((genre)=>{
             genresInvolved+=(genre.name+',');
         });
     }
+
     genresInvolved = genresInvolved.substring(0,genresInvolved.length-1);
     let runtime = `${Math.trunc(data.runtime/(60))}hrs`;
     if(data.runtime%60 !== 0)
     {
         runtime+= ` ${data.runtime%60}mins`;
     }
+
     if(data.runtime)
     {
         runtime = `&bull;  ${runtime}`;
@@ -28,7 +31,8 @@ const itemClicked = async (id, genre = "movie") => {
     {
         runtime = '';
     }
-    containerDiv.innerHTML = `
+
+    const bgMovieContainer = `
         <div class="bgMovie">
             <div class="bgOverlay">
                 <img src="${imgSrc}">
@@ -44,15 +48,18 @@ const itemClicked = async (id, genre = "movie") => {
             </div>
         </div>
     `;
+    containerDiv.innerHTML = bgMovieContainer;
+
     const bgMovieDiv = document.querySelector('div.bgMovie');
     window.scrollTo(0, 0); 
     bgMovieDiv.style.cssText = `
-        background-image: url('https://image.tmdb.org/t/p/original${data.backdrop_path}');
+        background-image: url('${imgUrl}${data.backdrop_path}');
     `;
     if(searchLogoDiv.style.display === "block")
     {
         bgMovieDiv.style.marginTop = "105px";
     }
+
     const wishlist = document.querySelector('img#wishlist');
     wishlist.onclick = async () => {
         if(sessionStorage.getItem('user'))
@@ -67,6 +74,7 @@ const itemClicked = async (id, genre = "movie") => {
             wishlist.style.background = 'none';
         }
     };
+
     wishlist.onmouseover = (e) => {
         if(!sessionStorage.getItem('user'))
         {
@@ -78,6 +86,7 @@ const itemClicked = async (id, genre = "movie") => {
             msg.style.display = `block`;
         }
     };
+
     wishlist.onmouseout = () => {
         document.querySelector('div.wishlistMsg').style.display = `none`;
     };

@@ -1,7 +1,8 @@
 let profilePage = '';
 
-const getProfilePage = async (user) => {
-    containerDiv.innerHTML = `
+const getProfilePageHtml = (user) => {
+    const div = document.createElement('div');
+    const divHtml = `
         <div class="bgUserDetails">
             <div class="userDetails">
                 <span class="userLogo">${user.username.substring(0,1).toUpperCase()}</span>
@@ -19,6 +20,14 @@ const getProfilePage = async (user) => {
             </div>
         </div>
     `;
+    div.innerHTML = divHtml;
+    return div;
+};
+
+const getProfilePage = async (user) => {
+    
+    containerDiv.innerHTML = '';
+    containerDiv.appendChild(getProfilePageHtml(user));
     switchedGenre(user);
     const moviesWatchList = document.querySelector('button#moviesWatchList');
     const tvWatchList = document.querySelector('button#tvWatchList');

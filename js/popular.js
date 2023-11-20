@@ -53,7 +53,7 @@ const loadPopularHtml = (popularData, genre) => {
 const popularItem = async (data, parentElement, genre) => {
     const div = document.createElement('div');
     div.setAttribute('id',`popular-${data.id}`);
-    let imgSrc = `https://image.tmdb.org/t/p/original${data.poster_path}`;
+    let imgSrc = `${imgUrl}${data.poster_path}`;
     if(data.poster_path === undefined || data.poster_path === null)
     {
         imgSrc = "./assets/noImg.jpg";

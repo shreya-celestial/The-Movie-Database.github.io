@@ -2,6 +2,8 @@ const containerDiv = document.querySelector('div.container');
 const dayButton = document.querySelector('button#todaysTrending');
 const weekButton = document.querySelector('button#thisWeekTrending');
 
+const imgUrl = 'https://image.tmdb.org/t/p/original';
+
 weekButton.onclick = () => {
     setButtonStyles(weekButton,dayButton);
     getTrending("week");
@@ -55,7 +57,7 @@ const loadTrendingHtml = (trendingData) => {
 const trendingItem = async (data, parentElement) => {
     const div = document.createElement('div');
     div.setAttribute('id',`div-${data.id}`);
-    let imgSrc = `https://image.tmdb.org/t/p/original${data.poster_path}`;
+    let imgSrc = `${imgUrl}${data.poster_path}`;
     if(data.poster_path === null)
     {
         imgSrc = "./assets/noImg.jpg";

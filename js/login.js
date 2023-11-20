@@ -1,20 +1,6 @@
 const loginButton = document.querySelector('h3#loginButton');
 let movieOrShow = '';
 
-loginButton.onclick = async () => {
-    if(!sessionStorage.getItem('user'))
-    {
-        login();
-    }
-    else
-    {
-        window.scrollTo(0, 0);
-        const user = JSON.parse(sessionStorage.getItem('user'));
-        getProfilePage(user);
-        movieOrShow = 'movies';
-    }
-};
-
 const login = async () => {
     const token  = await getRequestToken();
     await getLoginPage();
@@ -29,7 +15,7 @@ const login = async () => {
         const data = await createSessionWithLogin(body);
         if(!data.success)
         {
-            alert('Re-enter Details');
+            alert('Authentication Failed! Re-enter your id and password.');
         }
         else
         {
@@ -42,7 +28,7 @@ const login = async () => {
 };
 
 const getLoginPage = () => {
-    containerDiv.innerHTML = `
+    const divHtml = `
         <div class="initialLoginPage">
             <form id="loginElementsDiv">
                 <h2>Login to your account</h2>
@@ -54,6 +40,7 @@ const getLoginPage = () => {
             </form>
         </div>
     `;
+    containerDiv.innerHTML = divHtml;
     return;
 };
 
@@ -68,3 +55,17 @@ if(sessionStorage.getItem('user'))
     const accountDetails = JSON.parse(sessionStorage.getItem('user'));
     resetLoginStyle(accountDetails);
 }
+
+loginButton.onclick = async () => {
+    if(!sessionStorage.getItem('user'))
+    {
+        login();
+    }
+    else
+    {
+        window.scrollTo(0, 0);
+        const user = JSON.parse(sessionStorage.getItem('user'));
+        getProfilePage(user);
+        movieOrShow = 'movies';
+    }
+};

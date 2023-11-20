@@ -21,7 +21,7 @@ popularMovieOption.onclick = async () => {
 
 const loadOptionsInitialHtml = (dataList, heading) => {
     window.scrollTo(0, 0); 
-    containerDiv.innerHTML = ` 
+    const divHtml = ` 
         <h2 class="optionHeadings">${heading} Movies</h2>
         <div class = "optionsDiv">
             <div class="filters"></div>
@@ -30,65 +30,9 @@ const loadOptionsInitialHtml = (dataList, heading) => {
             </div> 
         </div>
     `;
+    containerDiv.innerHTML = divHtml;
     loadFiltersHtml();
     loadOptionMovieHtml(dataList);
-};
-
-const allFiltersHtml = () => {
-    const filters = document.querySelector('div.filters');
-    const form = document.createElement('form');
-    form.setAttribute('id','setAllFilters');
-    form.innerHTML = `
-        <div class="sortingDiv">
-            <div class="sortLabelDiv">
-                <h3>Sort</h3>
-                <img id="arrowSort" src="./assets/arrow.png">
-            </div>
-            <div class="sortContentDiv">
-                <label for="sort">Sort Results By</label>
-                <select name="sort" id="sortingDD">
-                    <option value="popularity.desc">Popularity Descending</option>
-                    <option value="popularity.asc">Popularity Ascending</option>
-                </select>
-            </div>
-        </div>
-        <div class="allFiltersDiv">
-            <div class="filterLabelDiv">
-                <h3>Filters</h3>
-                <img id="arrowFilter" src="./assets/arrow.png">
-            </div>
-            <div class="filterContents">
-                <div class="genres">
-                    <label>Genres</label>
-                    <div class="allGenres"></div>
-                </div>
-                <div class="userScoreFilter">
-                    <label for="userScore">User Score</label>
-                    <div class="rangeDisplay">
-                        0 - 10
-                    </div>
-                    <div class="range">
-                        <div class="range-slider">
-                            <span class="range-selected"></span>
-                        </div>
-                        <div class="range-input">
-                            <input type="range" class="min" name="minScore" min="0" max="10" value="0" step="1">
-                            <input type="range" class="max" name="maxScore" min="0" max="10" value="10" step="1">
-                        </div>
-                    </div>
-                </div>
-                <div class="minVotesFilter">
-                    <label for="minVotes">Minimum User Votes</label>
-                    <div class="votesRangeDisplay">
-                        0
-                    </div>
-                    <input type="range" name="minVotes" id="minVotesId" min="0" max="500" value="0" step="100">
-                </div>
-            </div>
-        </div>
-        <button class="filterSearchButton" id="filterSearchButton" disabled="true">Search</button>
-    `;
-    filters.appendChild(form);
 };
 
 const loadFiltersHtml = async () => {
@@ -271,7 +215,7 @@ const optionItem = async (data, parentElement) => {
     const div = document.createElement('div');
     div.setAttribute('class', 'moviesOfOption');
     div.setAttribute('id',`div-${data.id}`);
-    let imgSrc = `https://image.tmdb.org/t/p/original${data.poster_path}`;
+    let imgSrc = `${imgUrl}${data.poster_path}`;
     if(data.poster_path === null)
     {
         imgSrc = "./assets/noImg.jpg";
@@ -286,6 +230,63 @@ const optionItem = async (data, parentElement) => {
     itemDiv.onclick = () => {
         itemClicked(data.id, data.media_type);        
     };
+};
+
+const allFiltersHtml = () => {
+    const filters = document.querySelector('div.filters');
+    const form = document.createElement('form');
+    form.setAttribute('id','setAllFilters');
+    form.innerHTML = `
+        <div class="sortingDiv">
+            <div class="sortLabelDiv">
+                <h3>Sort</h3>
+                <img id="arrowSort" src="./assets/arrow.png">
+            </div>
+            <div class="sortContentDiv">
+                <label for="sort">Sort Results By</label>
+                <select name="sort" id="sortingDD">
+                    <option value="popularity.desc">Popularity Descending</option>
+                    <option value="popularity.asc">Popularity Ascending</option>
+                </select>
+            </div>
+        </div>
+        <div class="allFiltersDiv">
+            <div class="filterLabelDiv">
+                <h3>Filters</h3>
+                <img id="arrowFilter" src="./assets/arrow.png">
+            </div>
+            <div class="filterContents">
+                <div class="genres">
+                    <label>Genres</label>
+                    <div class="allGenres"></div>
+                </div>
+                <div class="userScoreFilter">
+                    <label for="userScore">User Score</label>
+                    <div class="rangeDisplay">
+                        0 - 10
+                    </div>
+                    <div class="range">
+                        <div class="range-slider">
+                            <span class="range-selected"></span>
+                        </div>
+                        <div class="range-input">
+                            <input type="range" class="min" name="minScore" min="0" max="10" value="0" step="1">
+                            <input type="range" class="max" name="maxScore" min="0" max="10" value="10" step="1">
+                        </div>
+                    </div>
+                </div>
+                <div class="minVotesFilter">
+                    <label for="minVotes">Minimum User Votes</label>
+                    <div class="votesRangeDisplay">
+                        0
+                    </div>
+                    <input type="range" name="minVotes" id="minVotesId" min="0" max="500" value="0" step="100">
+                </div>
+            </div>
+        </div>
+        <button class="filterSearchButton" id="filterSearchButton" disabled="true">Search</button>
+    `;
+    filters.appendChild(form);
 };
 
 

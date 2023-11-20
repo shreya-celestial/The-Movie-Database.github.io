@@ -1,6 +1,6 @@
 const searchingForm = document.querySelector('form#searchStuff');
 
-searchingForm.onsubmit = (e) => {
+const handleSearchSubmit = (e) => {
     e.preventDefault();
     searchLogoDiv.children[0].value = e.target.elements.search.value;
     const value = e.target.elements.search.value.replace(' ','%20');
@@ -9,24 +9,30 @@ searchingForm.onsubmit = (e) => {
     searchValue(value, page);
 };
 
+searchingForm.onsubmit = (e) => {
+    handleSearchSubmit(e);
+};
+
 const searchValue = async (value, page) => {
     const response = await searchItem(value, page);
     containerDiv.innerHTML = "";
     getSearchData(response);
 };
 
-
 const getSearchInitialHtml = async () => {
     const div = document.createElement('div');
     div.setAttribute('class', 'searchDiv');
     await containerDiv.appendChild(div);
+
     const parentDiv = document.querySelector('div.searchDiv');
     const newDiv = document.createElement('div');
     newDiv.setAttribute('class', 'searchData');
     parentDiv.appendChild(newDiv);
+
     const pagDiv = document.createElement('div');
     pagDiv.setAttribute('class', 'searchPagination');
     parentDiv.appendChild(pagDiv);
+
     searchLogoDiv.style.display = "block";
     if(searchLogoDiv.style.display === "block")
     {
@@ -107,7 +113,7 @@ const getSearchPagination = async (response) => {
 const searchListItem = async (data, parentElement) => {
     const div = document.createElement('div');
     div.setAttribute('id',`search-${data.id}`);
-    let imgSrc = `https://image.tmdb.org/t/p/original${data.poster_path}`;
+    let imgSrc = `${imgUrl}${data.poster_path}`;
     if(data.poster_path === null)
     {
         imgSrc = "./assets/noImg.jpg";

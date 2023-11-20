@@ -9,7 +9,7 @@ homeLogo.onclick = () => {
 };
 
 let count = 0;
-searchLogo.onclick = () => {
+const handleSearchLogoClick = () => {
     count++;
     if(count === 0 || count%2 === 0 )
     {
@@ -29,6 +29,10 @@ searchLogo.onclick = () => {
             bgMovieDiv.style.marginTop = '105px';
         }
     }
+};
+
+searchLogo.onclick = () => {
+    handleSearchLogoClick();
 };
 
 searchLogoDiv.onsubmit = (e) => {
